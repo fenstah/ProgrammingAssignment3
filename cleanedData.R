@@ -13,7 +13,10 @@ cleanAndCacheOutcomeData <- function(x = data.frame()) {
         orderbyOutcome <- function(outcomeNum) {
             data <- getCleanedData()
             data<-data[order(data$State, data[,outcomeNum], data$Hospital.Name, decreasing=F),]    #get the ordered matrix by state, outcome and name 
-            data[,c(1:2,outcomeNum)]            
+            data<-data[,c(1:2,outcomeNum)]            
+            data<-data[complete.cases(data[,3]),]                         #remove NAs   
+            colnames(data) <- c("hospital", "state", "outcome")
+            data
         }
         orderedByHeartAttack <- function() {
             orderbyOutcome(3)
@@ -25,6 +28,7 @@ cleanAndCacheOutcomeData <- function(x = data.frame()) {
             orderbyOutcome(5)
         }
         list(set=set,get=get, getCleanedData=getCleanedData,
+             orderbyOutcome=orderbyOutcome,
              orderedByHeartAttack=orderedByHeartAttack,
              orderedByHeartFailure=orderedByHeartFailure,
              orderedByPneumonia=orderedByPneumonia) 
