@@ -9,10 +9,6 @@ rankall<-function(outcome,num = "best") {
     outcomeData <- cleanAndCacheOutcomeData(read.csv("outcome-of-care-measures.csv", header=T, na.strings="Not Available"))
     orderedData <- outcomeData$orderbyOutcome(which(validOutcomes==outcome)+2)
     
-
-    ##For each state, find the hospital of the given rank
-    ##Return hospital name in that state with the given rank 30-day death rate
-    
     ##split by state
     splitOutcomes<-split(orderedData, orderedData$state)
     
