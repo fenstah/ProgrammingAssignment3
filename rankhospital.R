@@ -6,7 +6,7 @@ rankhospital<-function(state,outcome,num = "best") {
     if(!outcome %in% validOutcomes) stop("invalid outcome")
     
     ## Read outcome data
-    outcomeData <- cleanAndCacheOutcomeData(read.csv("outcome-of-care-measures.csv", header=T, na.strings="Not Available"))
+    outcomeData <- cleanAndCacheOutcomeData() 
     orderedData <- outcomeData$orderbyOutcome(which(validOutcomes==outcome)+2)
         
     ##Check that state and outcome are valid

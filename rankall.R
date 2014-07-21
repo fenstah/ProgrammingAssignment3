@@ -1,4 +1,4 @@
-source('C:/Repos/ProgrammingAssignment3/cleanedData.R')
+source('C:/Repos/ProgrammingAssignment3/rankstate.R')
 
 rankall<-function(outcome,num = "best") {
     ##validate that outcome can only be 'heart attack', 'heart failure', or 'pneumonia'
@@ -6,7 +6,7 @@ rankall<-function(outcome,num = "best") {
     if(!outcome %in% validOutcomes) stop("invalid outcome")
     
     ## Read outcome data and get it by order of outcome
-    outcomeData <- cleanAndCacheOutcomeData(read.csv("outcome-of-care-measures.csv", header=T, na.strings="Not Available"))
+    outcomeData <- cleanAndCacheOutcomeData() 
     orderedData <- outcomeData$orderbyOutcome(which(validOutcomes==outcome)+2)
     
     ##split by state

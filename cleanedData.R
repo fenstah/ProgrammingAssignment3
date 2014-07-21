@@ -1,6 +1,9 @@
 ## The cleanAndCacheOutcomeData function creates an object that can cache the outcome data as well as clean it for 
 ## only the columns we care about and quickly return an ordered version of the data given the outcome variable desired
-cleanAndCacheOutcomeData <- function(x = data.frame()) {
+cleanAndCacheOutcomeData <- function(data=NULL) {
+        cacheData <- attr(cleanAndCacheOutcomeData,"cacheData")
+        if(is.null(cacheData)) cacheData<- read.csv("outcome-of-care-measures.csv", header=T, na.strings="Not Available")
+        ifelse(!is.null(data), x<-data, x<-cacheData)  
         cleanedData <- ifelse(ncol(x)>=23, x[,c(2,7,11,17,23)], NULL)     #initialize cleanedData variable to NULL
         set <- function(y) {                                              #public set method for initializing variable
             x <<- y
@@ -27,6 +30,7 @@ cleanAndCacheOutcomeData <- function(x = data.frame()) {
         orderedByPneumonia <- function() {
             orderbyOutcome(5)
         }
+        attr(cleanAndCacheOutcomeData, "cacheData") <<- cacheData
         list(set=set,get=get, getCleanedData=getCleanedData,
              orderbyOutcome=orderbyOutcome,
              orderedByHeartAttack=orderedByHeartAttack,
